@@ -8,8 +8,8 @@ import HomeScreen from './screens/HomeScreen';
 import AccountScreen from './screens/AccountScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import FormScreen from './screens/FormScreen';
-import BuyerAccountScreen from './screens/BuyerAccountScreen';
-import SellerAccountScreen from './screens/SellerAccountScreen';
+import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen';
 
 
 const HomeStack = createNativeStackNavigator();
@@ -29,8 +29,8 @@ function AccountStackScreen(){
     return(
         <AccountStack.Navigator>
             <AccountStack.Screen name="Account" component={AccountScreen}/>
-            <AccountStack.Screen name="BuyerAccount" component={BuyerAccountScreen}/>
-            <AccountStack.Screen name="SellerAccount" component={SellerAccountScreen}/>
+            <AccountStack.Screen name="BuyerAccount" component={LoginScreen}/>
+            <AccountStack.Screen name="Register" component={RegisterScreen}/>
         </AccountStack.Navigator>
     );
 }

@@ -6,7 +6,7 @@ import FinalNavigation from './navigation/FinalNavigation';
 
 function App(){
     return(
-        <FinalNavigation/>
+        <AppStack/>
     );
 }
 

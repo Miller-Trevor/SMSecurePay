@@ -47,7 +47,7 @@ function SettingsStackScreen(){
 
 const Tab = createBottomTabNavigator();
 
-export default function FinalNavigation() {
+export default function AppStack() {
     return(
         <NavigationContainer>
             <Tab.Navigator>

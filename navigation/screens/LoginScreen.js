@@ -2,9 +2,47 @@ import * as React from 'react';
 import {SafeAreaView, View, TextInput, Text} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import * as SQLite from 'expo-sqlite';
+import {useState, useEffect} from 'react';
 
 
 export default function BuyerAccountScreen({navigation}) {
+    const db = SQLite.openDatabase('main.db');
+    const [isLoading, setIsLoading] = useState(true);
+    const[password, setPassword] = useState();
+    const[email, setEmail] = useState();
+
+    const TryLogIn = () => {
+        db.transaction((tx) => {
+            tx.executeSql(
+                'SELECT * FROM Accounts WHERE email = ?',
+                [email],
+                (_, results) => {
+                    const len = results.rows.length;
+                    if (len === 1) {
+                        const user = results.rows.item(0);
+                        if (user.password === password) {
+                            // Password matches, log in successful
+                            console.log('Login successful');
+
+                            // Navigate to Account screen with email as a parameter
+                            navigation.navigate('Account', { userEmail: email });
+                        } else {
+                            // Password doesn't match
+                            console.error('Incorrect password');
+                        }
+                    } else if (len === 0) {
+                        // Email not found
+                        console.error('Email not found');
+                    } else {
+                        // More than one user with the same email (should not happen)
+                        console.error('Multiple users with the same email');
+                    }
+                }
+            );
+        });
+    };
+
     return(
         <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
             <Text style={{fontSize: 28, fontWeight:500, color:'#333', marginBottom:30, paddingLeft:20}}>
@@ -27,6 +65,8 @@ export default function BuyerAccountScreen({navigation}) {
                 />
                 <TextInput 
                     placeholder="Email" 
+                    value={email}
+                    onChangeText={setEmail}
                     style={{flex:1, paddingVertical:0}} 
                     keyboardType='email-address'
                 />
@@ -48,6 +88,8 @@ export default function BuyerAccountScreen({navigation}) {
                 />
                 <TextInput 
                     placeholder="Password" 
+                    value={password}
+                    onChangeText={setPassword}
                     style={{flex:1, paddingVertical:0}} 
                     secureTextEntry={true}
                 />
@@ -58,7 +100,7 @@ export default function BuyerAccountScreen({navigation}) {
                 </TouchableOpacity>
             </View>
             <View style={{paddingLeft: 50, paddingRight:50}}>
-            <TouchableOpacity onPress={() =>{}} style={{backgroundColor:'#42EC95', padding:20, borderRadius:10, marginBottom:30}}>
+            <TouchableOpacity onPress={() =>TryLogIn()} style={{backgroundColor:'#42EC95', padding:20, borderRadius:10, marginBottom:30}}>
                 <Text style={{textAlign:'center', fontWeight:'700', fontSize:16, color:'#fff'}}>
                     Login
                 </Text>

@@ -106,7 +106,7 @@ export default function RegisterScreen({navigation}) {
             </View>
             <View style={{flexDirection:'row', justifyContent:'center', marginBottom:30}}>
                 <Text>Already Registered?</Text>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                     <Text style={{color:'#42EC95', fontWeight:'700'}}>  Login</Text>
                 </TouchableOpacity>
             </View>

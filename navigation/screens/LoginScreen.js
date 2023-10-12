@@ -1,17 +1,26 @@
-import * as React from 'react';
+import React , {useContext} from 'react';
 import {SafeAreaView, View, TextInput, Text} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { AuthContext } from '../../context/AuthContext';
 import * as SQLite from 'expo-sqlite';
 import {useState, useEffect} from 'react';
 
-
-export default function BuyerAccountScreen({navigation}) {
+export default function LoginScreen({navigation}) {
     const db = SQLite.openDatabase('main.db');
-    const [isLoading, setIsLoading] = useState(true);
     const[password, setPassword] = useState();
     const[email, setEmail] = useState();
 
+
+    useEffect(() => {
+        db.transaction(tx =>{
+            tx.executeSql('SELECT * FROM Accounts'),
+            (_,results)=>
+            {
+                console.log(results);
+            }
+        });
+    }, []);
     const TryLogIn = () => {
         db.transaction((tx) => {
             tx.executeSql(
@@ -66,7 +75,7 @@ export default function BuyerAccountScreen({navigation}) {
                 <TextInput 
                     placeholder="Email" 
                     value={email}
-                    onChangeText={setEmail}
+                    onChnageText={setEmail}
                     style={{flex:1, paddingVertical:0}} 
                     keyboardType='email-address'
                 />
@@ -89,7 +98,7 @@ export default function BuyerAccountScreen({navigation}) {
                 <TextInput 
                     placeholder="Password" 
                     value={password}
-                    onChangeText={setPassword}
+                    onChnageText={setPassword}
                     style={{flex:1, paddingVertical:0}} 
                     secureTextEntry={true}
                 />

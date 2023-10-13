@@ -75,7 +75,7 @@ export default function LoginScreen({navigation}) {
                 <TextInput 
                     placeholder="Email" 
                     value={email}
-                    onChnageText={setEmail}
+                    onChangeText={setEmail}
                     style={{flex:1, paddingVertical:0}} 
                     keyboardType='email-address'
                 />
@@ -98,7 +98,7 @@ export default function LoginScreen({navigation}) {
                 <TextInput 
                     placeholder="Password" 
                     value={password}
-                    onChnageText={setPassword}
+                    onChangeText={setPassword}
                     style={{flex:1, paddingVertical:0}} 
                     secureTextEntry={true}
                 />

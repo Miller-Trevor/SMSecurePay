@@ -4,6 +4,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import * as SQLite from 'expo-sqlite';
 import{useState, useEffect} from 'react'
+import * as Crypto from 'expo-crypto';
 
 export default function RegisterScreen({navigation}) {
     const db = SQLite.openDatabase('main.db');
@@ -16,35 +17,51 @@ export default function RegisterScreen({navigation}) {
             tx.executeSql('CREATE TABLE IF NOT EXISTS Accounts (id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT, password TEXT);');
         });
     }, []);
+    const SHA256Digest = async (input) => {
+        try {
+          const hash = await Crypto.digestStringAsync(
+            Crypto.CryptoDigestAlgorithm.SHA256,
+            input
+          );
+          console.log('Hash of password: '+ hash);
+          return hash;
+        } catch (error) {
+          console.error('Error calculating SHA-256 hash:', error);
+          throw error;
+        }
+      };
 
-    const SaveUserInfo = () => {
-        console.log('SaveUserInfo function called'); // Add this line to check if the function is being called
+      const SaveUserInfo = async () => {
+        console.log('SaveUserInfo function called');
+        console.log('Email: '+ email + ' Password: ' + password);
+        console.log('Hashing given password...')
+        try {
+          const hashedPassword = await SHA256Digest(password);
     
-        db.transaction((tx) => {
-            console.log('Transaction started'); // Add this line to check if the transaction is started
-    
+          db.transaction((tx) => {
             tx.executeSql(
-                'INSERT INTO Accounts (email, password) VALUES (?, ?);',
-                [email, password],
-                (tx, results) => {
-                    console.log('SQL executed'); // Add this line to check if the SQL statement is executed
+              'INSERT INTO Accounts (email, password) VALUES (?, ?);',
+              [email, hashedPassword],
+              (tx, results) => {
+                console.log('SQL executed');
     
-                    if (results.rowsAffected > 0) {
-                        // Insertion was successful
-                        console.log('User information saved successfully');
-                    } else {
-                        // Insertion failed
-                        console.error('Failed to save user information');
-                    }
-                },
-                (error) => {
-                    console.error('Error during SQL execution:', error); // Add this line to check for any SQL execution errors
+                if (results.rowsAffected > 0) {
+                  // Insertion was successful
+                  console.log('User information saved successfully');
+                } else {
+                  // Insertion failed
+                  console.error('Failed to save user information');
                 }
+              },
+              (error) => {
+                console.error('Error during SQL execution:', error);
+              }
             );
-        });
-    };
-    
-    
+          });
+        } catch (error) {
+          console.error('Error while hashing password:', error);
+        }
+      };
 
     return(
         <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
@@ -106,7 +123,7 @@ export default function RegisterScreen({navigation}) {
             </View>
             <View style={{flexDirection:'row', justifyContent:'center', marginBottom:30}}>
                 <Text>Already Registered?</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Text style={{color:'#42EC95', fontWeight:'700'}}>  Login</Text>
                 </TouchableOpacity>
             </View>

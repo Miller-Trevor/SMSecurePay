@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { NavigationContainer } from '@react-navigation/native';
-import AppStack from './navigation/AppStack.js';
+import AppNav from './navigation/AppNav';
+
 
 
 function App(){
     return(
-        <AppStack/>
+        <AppNav/>
+        
     );
 }
 

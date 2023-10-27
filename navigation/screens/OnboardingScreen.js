@@ -26,8 +26,31 @@ export default function OnboardingScreen({navigation}) {
                                 <LottieView source={require("../../assets/animations/animation_lnxoe0by.json")} autoPlay loop />
                             </View>
                         ),
-                        title: 'Welcome to SMSecure Pay!',
-                        subtitle: 'Tap Next to Learn More and Start!'
+                        title: (
+                            <View>
+                                <TouchableOpacity
+                                        onPress={() => navigation.navigate('Register')}
+                                        style={{
+                                        backgroundColor: '#42EC95', 
+                                        padding: 20,
+                                        width:270,
+                                        borderRadius:5, 
+                                        flexDirection:'row', 
+                                        justifyContent: 'space-between',
+                                        }}>
+                                        <Text style={{fontWeight:'bold', fontSize:18, color: '#fff', fontFamily:'Thonburi-Bold'}}>Register for Free!</Text>
+                                        <Ionicons name="cash-outline" size={22} color="#fff"/>
+                                </TouchableOpacity>
+                            </View>
+                        ),
+                        subtitle: (
+                            <View style={{flexDirection:'row', justifyContent:'center', marginBottom:30}}>
+                                <Text>Already Registered?</Text>
+                                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                                    <Text style={{color:'#42EC95', fontWeight:'700'}}>  Login</Text>
+                                </TouchableOpacity>
+                            </View>
+                        )
                     },
                     {
                         backgroundColor: '#fff',

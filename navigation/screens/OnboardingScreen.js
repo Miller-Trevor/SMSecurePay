@@ -22,7 +22,27 @@ export default function OnboardingScreen({navigation}) {
                     {
                         backgroundColor: '#fff',
                         image: (
-                            <View style={{width:300, height:400}}>
+                            <View style={{width:200, height:350}}>
+                                <LottieView source={require("../../assets/animations/animation_lnxoe0by.json")} autoPlay loop />
+                            </View>
+                        ),
+                        title: 'SMSecure Pay is a Mimic Cash App',
+                        subtitle: 'The Intended Functionality is the Same as a Cash App and is not Intended to be Used on the Market',
+                    },
+                    {
+                        backgroundColor: '#fff',
+                        image: (
+                            <View style={{width:200, height:350}}>
+                               <LottieView source={require("../../assets/animations/animation_lnxoe0by.json")} autoPlay loop />
+                            </View>
+                        ),
+                        title: 'Start Now!',
+                        subtitle: 'Click next to Get Started with Account Creation!'
+                    },
+                    {
+                        backgroundColor: '#fff',
+                        image: (
+                            <View style={{width:200, height:350}}>
                                 <LottieView source={require("../../assets/animations/animation_lnxoe0by.json")} autoPlay loop />
                             </View>
                         ),
@@ -51,26 +71,6 @@ export default function OnboardingScreen({navigation}) {
                                 </TouchableOpacity>
                             </View>
                         )
-                    },
-                    {
-                        backgroundColor: '#fff',
-                        image: (
-                            <View>
-                                <Text>Onboarding</Text>
-                            </View>
-                        ),
-                        title: 'SMSecure Pay is a Mimic Cash App',
-                        subtitle: 'The Intended Functionality is the Same as a Cash App and is not Intended to be Used on the Market',
-                    },
-                    {
-                        backgroundColor: '#fff',
-                        image: (
-                            <View>
-                                <Text>Onboarding</Text>
-                            </View>
-                        ),
-                        title: 'Start Now!',
-                        subtitle: 'Click next to Get Started with Account Creation!'
                     },
                 
                 ]}

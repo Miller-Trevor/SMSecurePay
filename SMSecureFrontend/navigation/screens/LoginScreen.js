@@ -5,6 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import * as SQLite from 'expo-sqlite';
 import {useState, useEffect} from 'react';
 import * as Crypto from 'expo-crypto'
+import { setGlobalState } from '../../Globals';
 
 
 export default function BuyerAccountScreen({navigation}) {
@@ -45,7 +46,7 @@ export default function BuyerAccountScreen({navigation}) {
                   if (user.password === hashedPassword) {
                     // Password matches, log in successful
                     console.log('Login successful');
-    
+                    setGlobalState('loggedInUser', email);
                     // Navigate to Account screen with email as a parameter
                     navigation.navigate('Account', { userEmail: email });
                   } else {
@@ -144,13 +145,13 @@ export default function BuyerAccountScreen({navigation}) {
                 </Text>
             </TouchableOpacity>
             </View>
-            <View style={{paddingLeft: 50, paddingRight:50}}>
+            {/* <View style={{paddingLeft: 50, paddingRight:50}}>
             <TouchableOpacity onPress={() =>DeleteAllAccountsFromDb()} style={{backgroundColor:'#42EC95', padding:20, borderRadius:10, marginBottom:30}}>
                 <Text style={{textAlign:'center', fontWeight:'700', fontSize:16, color:'#fff'}}>
                     Remove all accounts from the db
                 </Text>
             </TouchableOpacity>
-            </View>
+            </View> */}
             <View style={{flexDirection:'row', justifyContent:'center', marginBottom:30}}>
                 <Text>New to the App?</Text>
                 <TouchableOpacity onPress={() => navigation.navigate('Register')}>

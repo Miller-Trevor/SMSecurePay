@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import * as SQLite from 'expo-sqlite';
 import { Table, Row, Rows } from 'react-native-table-component';
 import { useGlobalState } from '../../Globals';
@@ -44,10 +44,13 @@ export default function TransactionHistoryScreen({navigation}) {
       return (
         <View style={styles.container}>
             <Text style={styles.title}>Transaction History</Text>
-            <Table borderStyle={{ borderWidth: 2, borderColor: '#c8e1ff' }}>
-                <Row data={tableHead} style={styles.head} textStyle={styles.text}/>
-                <Rows data={transactions} style={styles.row} textStyle={styles.text}/>
-            </Table>
+            <ScrollView>
+                <Table borderStyle={{ borderWidth: 2, borderColor: '#c8e1ff' }}>
+                    <Row data={tableHead} style={styles.head} textStyle={styles.text}/>
+                    <Rows data={transactions} style={styles.row} textStyle={styles.text}/>
+                </Table>
+            </ScrollView>
+            
         </View>
     );
 }
